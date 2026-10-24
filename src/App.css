@@ -1,216 +1,767 @@
-.app {
-  max-width: 700px;
-  margin: 40px auto;
-  padding: 24px;
-  font-family: Arial, sans-serif;
-  color: #263238;
+/* =========================
+   1. Temel ayarlar
+========================= */
+
+:root {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #1e293b;
+  background: #f1f5f9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --navy: #1e3a5f;
+  --blue: #2563eb;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --surface: #ffffff;
+  --page: #f1f5f9;
 }
 
-h1 {
-  margin-bottom: 8px;
-  color: #5b4bdb;
+* {
+  box-sizing: border-box;
 }
 
-h2 {
-  margin-top: 32px;
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--page);
 }
 
-p {
-  color: #667085;
-}
-
+button,
 input,
 select {
-  padding: 10px 12px;
-  border: 1px solid #d0d5dd;
-  border-radius: 8px;
-  font-size: 15px;
-}
-ul {
-  list-style: none;
-  padding: 0;
+  font: inherit;
 }
 
-li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 12px;
-  padding: 16px;
-  background: #ffffff;
-  border: 1px solid #e4e7ec;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
-}
-
-li button {
-  cursor: pointer;
-}
 button {
-  padding: 9px 14px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 button:hover {
-  opacity: 0.85;
   transform: translateY(-1px);
 }
 
-form button {
-  background: #5b4bdb;
-  color: white;
+button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 2px;
 }
 
-li button {
-  background: #eef2ff;
-  color: #4338ca;
-}
-
-li button:last-child {
-  background: #fee2e2;
-  color: #b91c1c;
-}
-body {
-  margin: 0;
-  background: #f5f6ff;
-}
+/* =========================
+   2. Ana dashboard
+========================= */
 
 .app {
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  width: calc(100% - 48px);
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
 }
 
-form {
+/* =========================
+   3. Başlık ve istatistikler
+========================= */
+
+.dashboard-header {
   display: flex;
-  gap: 10px;
-  margin: 20px 0;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 32px;
 }
 
-form input {
+.dashboard-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-header h1 {
+  margin: 0 0 8px;
+  color: var(--navy);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+.dashboard-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.add-task-button {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  color: #ffffff;
+  background: var(--blue);
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.add-task-button:hover {
+  background: #1d4ed8;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin: 0;
+}
+
+.stat-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  min-width: 0;
+  min-height: 168px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+.total-card {
+  background: #f3f7ff;
+  border-color: #d6e4ff;
+}
+
+.completed-card {
+  background: #f1fbf7;
+  border-color: #ccefe2;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.total-icon {
+  color: #2563eb;
+  background: #dbeafe;
+}
+
+.completed-icon {
+  color: #ffffff;
+  background: #10b981;
+}
+
+.stat-info {
   flex: 1;
   min-width: 0;
 }
 
-select {
-  background: white;
-  cursor: pointer;
+.stat-info > p:first-child {
+  margin: 4px 0 8px;
+  color: #475569;
+  font-size: 15px;
 }
 
-@media (max-width: 600px) {
-  .app {
-    margin: 16px;
-    padding: 16px;
-  }
+.stat-info .stat-value {
+  margin: 0;
+  color: #172b4d;
+  font-size: 32px;
+}
 
-  form {
-    flex-direction: column;
-  }
+.stat-info .completion-label {
+  margin: 8px 0 12px;
+  color: #64748b;
+  font-size: 13px;
 }
-.stats-container{
-  display: flex;
-  gap: 5px;
-  flex-wrap: wrap;
-}
-.stat-card{
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  background-color: white;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 2px 2px 8px #b9d3fd ;
-}
+
 .progress-bar {
   width: 100%;
-  height: 10px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
+  height: 8px;
   overflow: hidden;
+  background: var(--border);
+  border-radius: 999px;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: #1e0396;
-  border-radius: 10px;
+  background: var(--blue);
+  border-radius: 999px;
   transition: width 0.3s ease;
 }
+
+.completed-card .progress-fill {
+  background: #10b981;
+}
+
+/* =========================
+   4. Görevler paneli
+========================= */
+
+.tasks-section,
+.task-create-section {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.tasks-section {
+  margin-top: 24px;
+  background: #f8fafc;
+}
+
+.task-create-section {
+  width: 100%;
+  max-width: 560px;
+  margin: 36px auto;
+  padding: 32px;
+  background: var(--surface);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+}
+
+.tasks-section h2,
+.task-create-section h2 {
+  margin: 0 0 20px;
+  color: var(--text);
+  font-size: 20px;
+  text-align: left;
+}
+
+.task-create-section h2 {
+  margin-bottom: 16px;
+  color: #0f172a;
+  font-size: 25px;
+}
+
+.tasks-section > p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.tasks-section > p:last-child {
+  margin: 16px 0 0;
+  font-size: 13px;
+}
+
+.tasks-section h6 {
+  margin: 8px 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* =========================
+   5. Arama ve filtreler
+========================= */
+
+input,
+select {
+  padding: 10px 12px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+input:focus,
+select:focus {
+  outline: 3px solid rgba(37, 99, 235, 0.14);
+  border-color: var(--blue);
+}
+
+select {
+  cursor: pointer;
+}
+
+.tasks-section > input,
+.tasks-section > select {
+  min-height: 42px;
+  margin: 0 8px 12px 0;
+}
+
+.tasks-section > input {
+  width: min(280px, 100%);
+}
+
+.tasks-section > select {
+  min-width: 140px;
+  max-width: 100%;
+}
+
+/* =========================
+   6. Görev listesi ve kartları
+========================= */
+
+.tasks-section ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 18px 20px;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.05);
+}
+
+.task-item.completed {
+  background: #f8fafc;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+.task-content input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: var(--blue);
+  cursor: pointer;
+}
+
+.task-main {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+
+.task-description {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.task-item.completed .task-description {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.task-status {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-active {
+  color: var(--muted);
+}
+
+.status-completed {
+  color: #16a34a;
+}
+
+/* Görev kartlarındaki öncelik rozetleri */
+.priority {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .priority-düşük {
-  background-color: #dbeafe;
-  color: #1d4ed8;
+  color: #166534;
+  background: #dcfce7;
 }
 
 .priority-orta {
-  background-color: #ffedd5;
-  color: #c2410c;
+  color: #92400e;
+  background: #fef3c7;
 }
 
 .priority-yüksek {
-  background-color: #fee2e2;
-  color: #b91c1c;
+  color: #991b1b;
+  background: #fee2e2;
 }
-.priority-düşük,
-.priority-orta,
-.priority-yüksek {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: bold;
+
+/* =========================
+   7. Düzenle ve sil butonları
+========================= */
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.task-actions button {
+  padding: 8px 11px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.task-actions .edit-button {
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+.task-actions .edit-button:hover {
+  background: #dbeafe;
+}
+
+.task-actions .delete-button {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+}
+
+.task-actions .delete-button:hover {
+  background: #fee2e2;
+}
+
+/* =========================
+   8. Görev oluşturma formu
+========================= */
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 26px 0 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.form-group label {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.task-input {
+  width: 100%;
+  min-width: 0;
+  padding: 13px 14px;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* Öncelik seçenekleri: kart rozetlerinden ayrı sınıflar */
+.priority-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.priority-option {
+  padding: 13px 8px;
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.priority-option.low:hover,
+.priority-option.low.selected {
+  color: #166534;
+  background: #dcfce7;
+  border-color: #22c55e;
+}
+
+.priority-option.medium:hover,
+.priority-option.medium.selected {
+  color: #92400e;
+  background: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.priority-option.high:hover,
+.priority-option.high.selected {
+  color: #991b1b;
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.priority-option.selected {
+  box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.15);
+  transform: translateY(-1px);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.form-actions button {
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cancel-button {
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+}
+
+.cancel-button:hover {
+  background: #f8fafc;
+}
+
+.save-button {
+  color: #ffffff;
+  background: var(--blue);
+  border: none;
+}
+
+.save-button:hover {
+  background: #1d4ed8;
+}
+
+/* =========================
+   9. Tablet ve mobil uyum
+========================= */
+
+@media (max-width: 850px) {
+  .app {
+    padding: 24px;
+  }
+
+  .stats-container {
+    gap: 14px;
+  }
+
+  .stat-card {
+    padding: 20px;
+  }
 }
 
 @media (max-width: 600px) {
   .app {
-    margin: 12px;
+    width: calc(100% - 20px);
+    margin: 10px auto;
     padding: 16px;
+    border-radius: 12px;
+  }
+
+  .dashboard-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-header h1 {
+    font-size: 26px;
   }
 
   .stats-container {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .stat-card {
-    width: auto;
+    min-height: 140px;
+    padding: 20px;
   }
 
-  form {
-    flex-direction: column;
+  .stat-info .stat-value {
+    font-size: 28px;
   }
 
-  form input,
-  form select,
-  form button {
+  .tasks-section,
+  .task-create-section {
+    padding: 16px;
+  }
+
+  .task-create-section {
+    margin: 20px auto;
+  }
+
+  .tasks-section > input,
+  .tasks-section > select {
     width: 100%;
-    box-sizing: border-box;
-  }
-
-  .app > div > div {
     min-width: 0;
+    margin-right: 0;
   }
 
-  input,
-  select,
-  button {
-    max-width: 100%;
-  }
-
-  li {
-    flex-direction: column;
+  .task-item {
     align-items: stretch;
+    flex-direction: column;
+    padding: 16px;
   }
 
-  li > div:last-child {
-    display: flex;
+  .task-content {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .task-main {
+    flex-basis: calc(100% - 50px);
+  }
+
+  .task-actions {
+    justify-content: flex-end;
+    width: 100%;
     flex-wrap: wrap;
   }
 
-  li > div:last-child button {
+  .task-actions button {
     flex: 1;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .priority-options {
+    gap: 6px;
+  }
+
+  .priority-option {
+    padding: 12px 4px;
+    font-size: 12px;
+  }
+}
+.task-due-date {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 13px;
+}
+.task-item.overdue {
+  border-color: #fca5a5;
+  background-color: #fff7f7;
+}
+
+.overdue-label {
+  display: block;
+  margin-top: 5px;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 600;
+}
+/* Son tasarım dokunuşları */
+.task-item {
+  border-radius: 14px;
+  padding: 18px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+}
+
+.edit-button,
+.delete-button,
+.save-button,
+.add-task-button {
+  border-radius: 9px;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.edit-button:hover,
+.delete-button:hover,
+.save-button:hover,
+.add-task-button:hover {
+  transform: translateY(-1px);
+}
+
+.task-input,
+input,
+select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-input:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #6085e8;
+  box-shadow: 0 0 0 3px rgba(96, 133, 232, 0.13);
+}
+
+button:focus-visible {
+  outline: 2px solid #6085e8;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .app {
+    width: calc(100% - 24px);
+    margin: 12px auto;
+    padding: 18px;
+  }
+
+  .task-item {
+    padding: 14px;
   }
 }

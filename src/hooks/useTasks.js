@@ -44,12 +44,13 @@ function useTasks() {
     prevTasks.filter((task) => task.id !== id)
   );
 };
-    const addTask = (description, priority) => {
+   const addTask = (description, priority, dueDate) => {
   const newTask = {
     id: Date.now(),
     description,
     completed: false,
     priority,
+    dueDate,
   };
 
   setTasks((prevTasks) => [...prevTasks, newTask]);
